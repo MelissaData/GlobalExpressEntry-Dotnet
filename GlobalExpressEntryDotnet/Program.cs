@@ -7,7 +7,7 @@ namespace GlobalExpressEntryDotnet
   {
     static void Main(string[] args)
     {
-      string baseServiceUrl = @"http://expressentry.melissadata.net/";
+      string baseServiceUrl = @"https://expressentry.melissadata.net/";
       string serviceEndpoint = @"web/ExpressAddress"; 
       string license = "";
       string addressline1 = "";
@@ -95,7 +95,7 @@ namespace GlobalExpressEntryDotnet
     
     static void CallAPI(string baseServiceUrl, string serviceEndPoint, string license, string addressline1, string city, string state, string postal)
     {
-      Console.WriteLine("\n=============== WELCOME TO MELISSA GLOBAL EXPRESS ENTRY CLOUD API ===============\n");
+      Console.WriteLine("\n================ WELCOME TO MELISSA GLOBAL EXPRESS ENTRY CLOUD API ================\n");
       
       bool shouldContinueRunning = true;
       while (shouldContinueRunning)

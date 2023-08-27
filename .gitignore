@@ -3,9 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-[Gg]lobal[Ee]xpress[Aa]ddress/[Bb]uild
-[Gg]lobal[Ee]xpress[Aa]ddress/[Bb]in
-[Gg]lobal[Ee]xpress[Aa]ddress/[Oo]bj
+[Gg]lobal[Ee]xpress[Ee]ntry[Dd]otnet/[Bb]uild
+[Gg]lobal[Ee]xpress[Ee]ntry[Dd]otnet/[Bb]in
+[Gg]lobal[Ee]xpress[Ee]ntry[Dd]otnet/[Oo]bj
+[Gg]lobal[Ee]xpress[Ee]ntry[Dd]otnet/[pp]roperties
 
 # User-specific files
 *.rsuser

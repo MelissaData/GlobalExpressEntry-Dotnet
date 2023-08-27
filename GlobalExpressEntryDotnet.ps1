@@ -44,7 +44,7 @@ if ([string]::IsNullOrEmpty($license)) {
 # Build project
 Write-Host "`n=================================== BUILD PROJECT ================================="
 
-dotnet publish -f="net7.0" -c Release -o $BuildPath GlobalExpressAddressDotnet\GlobalExpressEntryDotnet.csproj
+dotnet publish -f="net7.0" -c Release -o $BuildPath GlobalExpressEntryDotnet\GlobalExpressEntryDotnet.csproj
 
 # Run project
 if ([string]::IsNullOrEmpty($addressline1) -and [string]::IsNullOrEmpty($city) -and [string]::IsNullOrEmpty($state) -and [string]::IsNullOrEmpty($postal)) {
