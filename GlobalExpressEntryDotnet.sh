@@ -1,7 +1,31 @@
 #!/bin/bash
 
-# Name:    GlobalExpressEntryCloudAPI
-# Purpose: Execute the GlobalExpressEntryCloudAPI program
+# Builds and runs the Melissa Global Express Entry Cloud API .NET sample.
+#
+# This script builds GlobalExpressEntryDotnet with dotnet publish, then runs the resulting
+# executable, passing along the license and (if supplied) the address fields.
+#
+# Overall flow:
+#   1. Parse the command-line options below.
+#   2. Resolve the license (--license, then a prompt, then the MD_LICENSE environment variable).
+#   3. Publish GlobalExpressEntryDotnet in Release configuration to ./GlobalExpressEntryDotnet/Build.
+#   4. Run the built executable: one-shot mode if any address field was supplied,
+#      otherwise interactive mode (the .NET program prompts for each field).
+#
+# Options (each takes a value):
+#   --addressline1   Street address to look up.
+#   --city           City to look up.
+#   --state          State to look up.
+#   --postal         Postal code to look up.
+#   --license        License string. If omitted, the script prompts for it; if the prompt
+#                    is left blank, it falls back to MD_LICENSE. Running without --license
+#                    always prompts, even when MD_LICENSE is set.
+#
+# Paths are relative to the current directory, so run the script from its own folder.
+#
+# Examples:
+#   ./GlobalExpressEntryDotnet.sh --license "your-license"
+#   ./GlobalExpressEntryDotnet.sh --addressline1 "22382 Avenida Empresa" --city "Rancho Santa Margarita" --state "CA" --postal "92688" --license "your-license"
 
 ######################### Constants ##########################
 
@@ -16,6 +40,8 @@ state=""
 postal=""
 license=""
 
+# Read each --flag and its value. A flag with no value, or whose value starts
+# with "-", is an error. Unrecognized options are ignored.
 while [ $# -gt 0 ] ; do
   case $1 in
     --addressline1)  
@@ -72,8 +98,7 @@ while [ $# -gt 0 ] ; do
   shift
 done
 
-# Use the location of the .sh file
-# Modify this if you want to use
+# Build paths are relative to the current directory (not the script's location)
 CurrentPath="$(pwd)"
 ProjectPath="$CurrentPath/GlobalExpressEntryDotnet"
 BuildPath="$ProjectPath/Build"
@@ -112,10 +137,13 @@ printf "\n=================================== BUILD PROJECT ====================
 dotnet publish -f="net7.0" -c Release -o "$BuildPath" GlobalExpressEntryDotnet/GlobalExpressEntryDotnet.csproj
 
 # Run project
+# No address fields supplied -> run interactively; otherwise pass them through for one-shot mode.
+# Bash passes empty quoted values as real empty arguments, so unsupplied fields arrive
+# empty and the program prompts for them.
 if [ -z "$addressline1" ] && [ -z "$city" ] && [ -z "$state" ] && [ -z "$postal" ];
 then
-    dotnet "$BuildPath"/GlobalExpressEntryDotnet.dll --license $license 
+    dotnet "$BuildPath"/GlobalExpressEntryDotnet.dll --license "$license"
 else
-    dotnet "$BuildPath"/GlobalExpressEntryDotnet.dll --license $license --addressline1 "$addressline1" --city "$city" --state "$state" --postal "$postal" 
+    dotnet "$BuildPath"/GlobalExpressEntryDotnet.dll --license "$license" --addressline1 "$addressline1" --city "$city" --state "$state" --postal "$postal"
 fi
 
